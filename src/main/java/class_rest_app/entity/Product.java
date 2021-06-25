@@ -16,7 +16,8 @@ public class Product {
     private int quantity;
     private double price;
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(int id, String name, int quantity, double price) {
         Id = id;

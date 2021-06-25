@@ -3,7 +3,6 @@ package class_rest_app.controller;
 import class_rest_app.entity.Product;
 import class_rest_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +15,19 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+
+    private final ProductService service;
+
     @Autowired
-    private ProductService service;
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public String all(Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("products", service.getProducts());
-        if(redirectAttributes.containsAttribute("searchProduct")) {
-            model.addAttribute("searchResults",redirectAttributes.getFlashAttributes());
+        if (redirectAttributes.containsAttribute("searchProduct")) {
+            model.addAttribute("searchResults", redirectAttributes.getFlashAttributes());
         }
         return "products/product";
     }
@@ -40,21 +44,20 @@ public class ProductController {
     }
 
     @GetMapping("/find/id")
-    public RedirectView findById(Model model, @RequestParam int id, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("searchProduct",service.getProductById(id));
+    public RedirectView findById(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("searchProduct", service.getProductById(id));
         return new RedirectView("/product");
 
     }
 
     @GetMapping("/find/name")
-    public String findByName(Model model, @RequestParam String name) {
-
-        model.addAttribute("searchProduct",service.getProductByName(name));
-        return "products/product";
+    public RedirectView findByName(@RequestParam String name, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("searchProduct", service.getProductByName(name));
+        return new RedirectView("/product");
     }
 
     @PostMapping("/update")
-    public RedirectView update( Product product) {
+    public RedirectView update(Product product) {
         service.updateProduct(product);
         return new RedirectView("/product");
     }

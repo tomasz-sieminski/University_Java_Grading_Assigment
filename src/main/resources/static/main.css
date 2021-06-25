@@ -25,6 +25,13 @@ table thead {
     background-color: #7ea8f8;
 }
 
+table caption {
+    background: #7ea8f8;
+    padding: 5px;
+    font-weight: bolder;
+    font-size: medium;
+}
+
 form {
     width: 50%;
     margin: 0 auto 15px;
@@ -33,6 +40,7 @@ form {
     padding: 10px;
     text-align: center;
 }
+
 label, input {
     margin: 10px 0;
     width: 100%;
@@ -47,4 +55,7 @@ button {
     border: 1px solid black;
     outline: none;
 }
-.hidden { display: none; }
+
+.hidden {
+    display: none;
+}

@@ -1,54 +1,60 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Produkty</title>
-  <link rel="stylesheet" th:href="@{main.css}">
+    <meta charset="UTF-8">
+    <title>Produkty</title>
+    <link rel="stylesheet" th:href="@{main.css}">
 </head>
 <body>
 <form method="post" action="/product/add">
-  <label>Nazwa<input type="text" name="name"></label>
-  <label>Ilość<input type="number" name="quantity" min="1"></label>
-  <label>Cena<input type="number" step="0.01" name="price" min="1"></label>
-  <button type="submit">Dodaj</button>
+    <label>Nazwa<input type="text" name="name"></label>
+    <label>Ilość<input type="number" name="quantity" min="1"></label>
+    <label>Cena<input type="number" step="0.01" name="price" min="1"></label>
+    <button type="submit">Dodaj</button>
 </form>
 <form method="get" action="/product/find/id">
-  <label>Szukane id <input type="number" name="id"></label>
-  <button type="submit">Wyszukaj</button>
+    <label>Szukane id <input type="number" name="id"></label>
+    <button type="submit">Wyszukaj</button>
+</form>
+<form method="get" action="/product/find/name">
+    <label>Szukane nazwy <input type="text" name="name"></label>
+    <button type="submit">Wyszukaj</button>
 </form>
 <table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Nazwa</th>
-    <th>Ilość</th>
-    <th>Cena</th>
-  </tr>
-  </thead>
-  <tr th:each="product: ${products}">
-    <td th:text="${product.id}"></td>
-    <td th:text="${product.name}"></td>
-    <td th:text="${product.quantity}"></td>
-    <td th:text="${product.price}"></td>
-    <td><a th:href="@{'/product/delete/' + ${product.id}}">Usuń</a> </td>
-  </tr>
+    <caption>Produkty</caption>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Ilość</th>
+        <th>Cena</th>
+    </tr>
+    </thead>
+    <tr th:each="product: ${products}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.quantity}"></td>
+        <td th:text="${product.price}"></td>
+        <td><a th:href="@{'/product/delete/' + ${product.id}}">Usuń</a></td>
+    </tr>
 </table>
 
-<table th:if="${searchProduct != null}">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Nazwa</th>
-    <th>Ilość</th>
-    <th>Cena</th>
-  </tr>
-  </thead>
-  <tr th:each="product: ${searchProduct}">
-    <td th:text="${product.id}"></td>
-    <td th:text="${product.name}"></td>
-    <td th:text="${product.quantity}"></td>
-    <td th:text="${product.price}"></td>
-  </tr>
+<table th:if="${searchProduct!=null and !searchProduct.isEmpty()}">
+    <caption>Wyszukiwane</caption>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Ilość</th>
+        <th>Cena</th>
+    </tr>
+    </thead>
+    <tr th:each="product: ${searchProduct}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.quantity}"></td>
+        <td th:text="${product.price}"></td>
+    </tr>
 </table>
 </body>
 </html>
